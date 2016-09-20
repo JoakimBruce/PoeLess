@@ -2,8 +2,6 @@ package hello;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +33,6 @@ public class HelloWorldTests {
     }
 
     private String output() {
-        return new String(baos.toByteArray(), StandardCharsets.UTF_8);
+        return new String(baos.toByteArray());
     }
 }
