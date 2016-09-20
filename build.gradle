@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 
 mainClassName = 'hello.HelloWorld'
 
