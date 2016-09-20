@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>
@@ -26,6 +28,7 @@ public class NameSpaceTests
     {
         mNameSpace = new NameSpace();
         assertNotNull(mNameSpace);
+        assertTrue(mNameSpace.isEmpty());
     }
 
     /**
@@ -45,5 +48,24 @@ public class NameSpaceTests
         Object readValue = mNameSpace.getVaraible(variableName);
         assertNotNull(readValue);
         assertEquals((String) readValue, (String) variableValue);
+    }
+
+    /**
+     * Tests that a non-existent variable has no value.
+     */
+    @Test
+    public final void shouldNotReturnAnythingForNonexistantVaraible()
+    {
+        //Given
+        String presentVariableName = "foo";
+        Object presentVariableValue = "I am foo";
+        String absentVariableName = "bar";
+
+        //When
+        mNameSpace.addVariable(presentVariableName, presentVariableValue);
+        Object absentVaraibleValue = mNameSpace.getVaraible(absentVariableName);
+
+        //Then
+        assertNull(absentVaraibleValue);
     }
 }

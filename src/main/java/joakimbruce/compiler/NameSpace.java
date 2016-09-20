@@ -52,4 +52,13 @@ public class NameSpace
     {
         return mVariableRepository.get(name);
     }
+
+    /**
+     * Checks if the name space contains any variables.
+     * @return <code>true</code> if the name space doesn't contain any varaibles.
+     */
+    public final boolean isEmpty()
+    {
+        return mVariableRepository.isEmpty();
+    }
 }
