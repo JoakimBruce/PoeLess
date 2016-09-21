@@ -126,8 +126,8 @@ public final class NameSpaceTests
 
         //Then
         Object variableValue = mNameSpace.getVaraible(variableName);
-        assertEquals("Variable " + variableName + " is not updated with the new value "
-            + newVariableValue + ", and instead is " + variableValue,
+        assertEquals("Variable " + variableName + " is " + variableValue
+            + ", expexted to have been changed to " + newVariableValue,
             (String) variableValue, (String) newVariableValue);
     }
 
@@ -140,6 +140,7 @@ public final class NameSpaceTests
         //Given
         String firstVariableName = "foo";
         Object firstVariableValue = "I am foo";
+        Object alternateVariableValue = "Who am i?";
         String secondVariableName = "bar";
         Object secondVariableValue = "bar I am";
 
@@ -153,5 +154,14 @@ public final class NameSpaceTests
             clonedNameSpace.variableExists(firstVariableName));
         assertFalse("Variable " + secondVariableName + " should not exist in the cloned name space",
             clonedNameSpace.variableExists(secondVariableName));
+
+        //When
+        clonedNameSpace.addVariable(firstVariableName, alternateVariableValue);
+
+        //Then
+        Object readFirstValue = mNameSpace.getVaraible(firstVariableName);
+        assertEquals("Variable " + firstVariableName + " is changed to " + readFirstValue
+            + ", expexted to have remained " + firstVariableValue,
+            (String) readFirstValue, (String) firstVariableValue);
     }
 }

@@ -1,6 +1,8 @@
 package joakimbruce.compiler;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <p>
@@ -12,6 +14,8 @@ import java.util.HashMap;
  */
 public final class NameSpace implements Cloneable
 {
+    private static final Logger LOGGER = Logger.getLogger(NameSpace.class.getName());
+
     private HashMap<String, Object> mVariableRepository;
 
     /**
@@ -66,8 +70,17 @@ public final class NameSpace implements Cloneable
     @Override
     public NameSpace clone()
     {
-        NameSpace newNameSpace = new NameSpace();
-        newNameSpace.mVariableRepository = (HashMap<String, Object>) mVariableRepository.clone();
+        NameSpace newNameSpace = null;
+        try
+        {
+            newNameSpace = (NameSpace) super.clone();
+            newNameSpace.mVariableRepository =
+                (HashMap<String, Object>) mVariableRepository.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            LOGGER.log(Level.WARNING, "NameSpace unable to clone itself: " + e.toString());
+        }
         return newNameSpace;
     }
 }
