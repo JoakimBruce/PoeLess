@@ -1,0 +1,87 @@
+//Original Path of Exile filter specification
+
+F -> F"\n\n"B | B
+
+B -> CMSV"\n"ST | V"\n"ST
+
+CMS -> CMS"\n"CM | CM
+
+CM -> "#"string(0..)
+
+V -> "show" | "hide"
+
+ST -> CL"\n"AL
+
+CL -> CL"\n\t"C | "\t"C | "\t"CCM
+
+C -> CIL | CDL | CQ | CR | CC | CBT | CS | CLS | CSG | CH | CW
+
+CIL -> "ItemLevel "OP" "LVL | "ItemLevel "LVL
+
+CDL -> "DropLevel "OP" "LVL | "DropLevel "LVL
+
+CQ -> "Quality "OP" "Q | "Quality "Q
+
+CR -> "Rarity "OP" "R | "Rarity "R
+
+CC -> "Class "CL
+
+CL -> CL" "substring(<Classes>) | substring(<Classes>)
+
+CBT -> "BaseType "BTL 
+
+BTL -> BTL" "substring(<BaseTypes>) | substring(<BaseTypes>)
+
+CS -> "Sockets "OP" "S | "Sockets "S
+
+CLS -> "LinkedSockets "OP" "LS | "LinkedSockets "LS
+
+CSG -> "SocketGroup "GL
+
+GL -> GLG | G
+
+CH -> "Height "OP" "HV | "Height "HV
+
+CW -> "Width "OP" "WV | "Width "WV
+
+OP -> "<" | "<=" | ">" | ">=" | "="
+
+LVL -> int(0..100)
+
+Q -> int(0..20)
+
+R -> "Normal" | "Magic" | "Rare" | "Unique"
+
+S -> int(0..6)
+
+LS -> 0 | int(2..6)
+
+G -> R | B | G | W
+
+HV -> int(1..4)
+
+WV -> int(1..2)
+
+AL -> AL"\n\t"A | "\t"A | "\t"ACM
+
+A -> ASOC | ASTC | ASAC | APAS | ASFS
+
+ASOC -> "SetBorderColor "COLS
+
+ASTC -> "SetTextColor "COLS
+
+ASAC -> "SetBackgroundColor "COLS
+
+APAS -> "PlayAlertSound "SID | "PlayAlertSound "SID" "VOL
+
+ASFS -> "SetFontSize "FS
+
+COLS -> COLV" "COLV" "COLV" "COLV | COLV" "COLV" "COLV
+
+COLV -> int(0..255)
+
+SID -> int(1..9)
+
+VOL -> int(0..300)
+
+FS -> int(18..42)
