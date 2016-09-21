@@ -27,15 +27,15 @@ public class NameSpaceTests
     public final void setup()
     {
         mNameSpace = new NameSpace();
-        assertNotNull(mNameSpace);
-        assertTrue(mNameSpace.isEmpty());
+        assertNotNull("NameSpace failed to initialize", mNameSpace);
+        assertTrue("NameSpace was not empty upon creation", mNameSpace.isEmpty());
     }
 
     /**
-     * Tests that you can retrieve the value of a variable that has been added to the name space.
+     * Tests that a variable that has been added to the name space exists in the name space.
      */
     @Test
-    public final void shouldBeAbleToHoldAVariable()
+    public final void shouldBeAbleToAddAVariableToTheNameSpace()
     {
         //Given
         String variableName = "foo";
@@ -45,9 +45,47 @@ public class NameSpaceTests
         mNameSpace.addVariable(variableName, variableValue);
 
         //Then
-        Object readValue = mNameSpace.getVaraible(variableName);
-        assertNotNull(readValue);
-        assertEquals((String) readValue, (String) variableValue);
+        assertTrue("Variable " + variableName + " does not exist in the name space",
+            mNameSpace.variableExists(variableName));
+    }
+
+    /**
+     * Tests that you can retrieve the values of variables that has been added to the name space.
+     */
+    @Test
+    public final void shouldBeAbleToHoldSeveralVariables()
+    {
+        //Given
+        String firstVariableName = "foo";
+        Object firstVariableValue = "I am foo";
+        String secondVariableName = "bar";
+        Object secondVariableValue = "bar I am";
+        String thirdVariableName = "chum";
+        Object thirdVariableValue = "chum for I";
+
+        //When
+        mNameSpace.addVariable(firstVariableName, firstVariableValue);
+        mNameSpace.addVariable(secondVariableName, secondVariableValue);
+        mNameSpace.addVariable(thirdVariableName, thirdVariableValue);
+
+        //Then
+        Object readSecondValue = mNameSpace.getVaraible(secondVariableName);
+        assertNotNull("Variable " + secondVariableName + " has no value", readSecondValue);
+        assertEquals("The retrieved vaule of " + secondVariableName + ", " + readSecondValue
+            + ", does not match the original value, " + secondVariableValue,
+            (String) readSecondValue, (String) secondVariableValue);
+
+        Object readFirstValue = mNameSpace.getVaraible(firstVariableName);
+        assertNotNull("Variable " + firstVariableName + " has no value", readFirstValue);
+        assertEquals("The retrieved vaule of " + firstVariableName + ", " + readFirstValue
+            + ", does not match the original value, " + firstVariableValue,
+            (String) readFirstValue, (String) firstVariableValue);
+
+        Object readThirdValue = mNameSpace.getVaraible(thirdVariableName);
+        assertNotNull("Variable " + thirdVariableName + " has no value", readThirdValue);
+        assertEquals("The retrieved vaule of " + thirdVariableName + ", " + readThirdValue
+            + ", does not match the original value, " + thirdVariableValue,
+            (String) readThirdValue, (String) thirdVariableValue);
     }
 
     /**
@@ -63,9 +101,32 @@ public class NameSpaceTests
 
         //When
         mNameSpace.addVariable(presentVariableName, presentVariableValue);
-        Object absentVaraibleValue = mNameSpace.getVaraible(absentVariableName);
+        Object absentVariableValue = mNameSpace.getVaraible(absentVariableName);
 
         //Then
-        assertNull(absentVaraibleValue);
+        assertNull("Unintialized variable " + absentVariableName + " has a non-null value",
+            absentVariableValue);
+    }
+
+    /**
+     * Tests that old variable values are overwritten with new ones.
+     */
+    @Test
+    public final void shouldOverwriteVariableValues()
+    {
+        //Given
+        String variableName = "foo";
+        Object oldVariableValue = "I am foo";
+        Object newVariableValue = "barbarbar";
+
+        //When
+        mNameSpace.addVariable(variableName, oldVariableValue);
+        mNameSpace.addVariable(variableName, newVariableValue);
+
+        //Then
+        Object variableValue = mNameSpace.getVaraible(variableName);
+        assertEquals("Variable " + variableName + " is not updated with the new value "
+            + newVariableValue + ", and instead is " + variableValue,
+            (String) variableValue, (String) newVariableValue);
     }
 }
