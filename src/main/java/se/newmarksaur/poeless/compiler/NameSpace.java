@@ -17,7 +17,7 @@ public final class NameSpace implements Cloneable
     private HashMap<String, Object> mVariableRepository;
 
     /**
-     * Creates a new name space.
+     * Creates a new empty name space.
      */
     public NameSpace()
     {
@@ -32,6 +32,23 @@ public final class NameSpace implements Cloneable
     public void addVariable(final String name, final Object value)
     {
         mVariableRepository.put(name, value);
+    }
+
+    /**
+     * Adds all the variables (if any) in the given name space to this one, overwriting any previous
+     * declarations. Does not change anything in the given name space.
+     *
+     * @param nameSpaceToAdd The name space containing the variables to add to this one.
+     */
+    public void addNameSpace(final NameSpace nameSpaceToAdd)
+    {
+        if (nameSpaceToAdd != null)
+        {
+            for (String variable: nameSpaceToAdd.mVariableRepository.keySet())
+            {
+                addVariable(variable, nameSpaceToAdd.getVaraible(variable));
+            }
+        }
     }
 
     /**
