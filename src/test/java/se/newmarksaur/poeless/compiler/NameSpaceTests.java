@@ -1,4 +1,4 @@
-package joakimbruce.compiler;
+package se.newmarksaur.poeless.compiler;
 
 import org.junit.Before;
 import org.junit.Test;

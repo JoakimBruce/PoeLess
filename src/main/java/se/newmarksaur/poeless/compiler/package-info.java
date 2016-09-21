@@ -4,4 +4,4 @@
  * @author      Joakim Bruce
  */
 
-package joakimbruce.compiler;
+package se.newmarksaur.poeless.compiler;

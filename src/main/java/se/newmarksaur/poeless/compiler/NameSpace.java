@@ -1,4 +1,4 @@
-package joakimbruce.compiler;
+package se.newmarksaur.poeless.compiler;
 
 import java.util.HashMap;
 import java.util.logging.Level;
