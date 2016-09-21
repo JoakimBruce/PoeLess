@@ -13,9 +13,7 @@ import static org.junit.Assert.assertTrue;
  * <p>
  * Tests for the NameSpace class.
  * </p>
- * <p>
- * © (c) Joakim Bruce
- * </p>
+ * @author      Joakim Bruce
  */
 public final class NameSpaceTests
 {

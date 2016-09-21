@@ -8,9 +8,7 @@ import java.util.logging.Logger;
  * <p>
  * Represents a name space, where the most recent definitions of variables are stored.
  * </p>
- * <p>
- * © (c) Joakim Bruce
- * </p>
+ * @author      Joakim Bruce
  */
 public final class NameSpace implements Cloneable
 {
