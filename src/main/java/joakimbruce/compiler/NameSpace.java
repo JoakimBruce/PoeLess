@@ -10,7 +10,7 @@ import java.util.HashMap;
  * © (c) Joakim Bruce
  * </p>
  */
-public class NameSpace
+public final class NameSpace implements Cloneable
 {
     private HashMap<String, Object> mVariableRepository;
 
@@ -27,7 +27,7 @@ public class NameSpace
      * @param name The variable name.
      * @param value The value of the variable.
      */
-    public final void addVariable(final String name, final Object value)
+    public void addVariable(final String name, final Object value)
     {
         mVariableRepository.put(name, value);
     }
@@ -37,7 +37,7 @@ public class NameSpace
      * @param name The name of the variable.
      * @return <code>true</code> if the variable exists in the name space.
      */
-    public final boolean variableExists(final String name)
+    public boolean variableExists(final String name)
     {
         return mVariableRepository.containsKey(name);
     }
@@ -48,7 +48,7 @@ public class NameSpace
      * @return The value of the variable, or <code>null</code> if the variable doesn't exist in the
      * name space.
      */
-    public final Object getVaraible(final String name)
+    public Object getVaraible(final String name)
     {
         return mVariableRepository.get(name);
     }
@@ -57,8 +57,17 @@ public class NameSpace
      * Checks if the name space contains any variables.
      * @return <code>true</code> if the name space doesn't contain any varaibles.
      */
-    public final boolean isEmpty()
+    public boolean isEmpty()
     {
         return mVariableRepository.isEmpty();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public NameSpace clone()
+    {
+        NameSpace newNameSpace = new NameSpace();
+        newNameSpace.mVariableRepository = (HashMap<String, Object>) mVariableRepository.clone();
+        return newNameSpace;
     }
 }

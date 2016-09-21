@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  * © (c) Joakim Bruce
  * </p>
  */
-public class NameSpaceTests
+public final class NameSpaceTests
 {
     private NameSpace mNameSpace;
 
@@ -24,7 +25,7 @@ public class NameSpaceTests
      * Creates a name space for tests to use.
      */
     @Before
-    public final void setup()
+    public void setup()
     {
         mNameSpace = new NameSpace();
         assertNotNull("NameSpace failed to initialize", mNameSpace);
@@ -35,7 +36,7 @@ public class NameSpaceTests
      * Tests that a variable that has been added to the name space exists in the name space.
      */
     @Test
-    public final void shouldBeAbleToAddAVariableToTheNameSpace()
+    public void shouldBeAbleToAddAVariableToTheNameSpace()
     {
         //Given
         String variableName = "foo";
@@ -53,7 +54,7 @@ public class NameSpaceTests
      * Tests that you can retrieve the values of variables that has been added to the name space.
      */
     @Test
-    public final void shouldBeAbleToHoldSeveralVariables()
+    public void shouldBeAbleToHoldSeveralVariables()
     {
         //Given
         String firstVariableName = "foo";
@@ -92,7 +93,7 @@ public class NameSpaceTests
      * Tests that a non-existent variable has no value.
      */
     @Test
-    public final void shouldNotReturnAnythingForNonexistantVaraible()
+    public void shouldNotReturnAnythingForNonexistantVaraible()
     {
         //Given
         String presentVariableName = "foo";
@@ -112,7 +113,7 @@ public class NameSpaceTests
      * Tests that old variable values are overwritten with new ones.
      */
     @Test
-    public final void shouldOverwriteVariableValues()
+    public void shouldOverwriteVariableValues()
     {
         //Given
         String variableName = "foo";
@@ -128,5 +129,29 @@ public class NameSpaceTests
         assertEquals("Variable " + variableName + " is not updated with the new value "
             + newVariableValue + ", and instead is " + variableValue,
             (String) variableValue, (String) newVariableValue);
+    }
+
+    /**
+     * Tests that a clone of a name space is properly separated from the original.
+     */
+    @Test
+    public void shouldCloneToANewNameSpace()
+    {
+        //Given
+        String firstVariableName = "foo";
+        Object firstVariableValue = "I am foo";
+        String secondVariableName = "bar";
+        Object secondVariableValue = "bar I am";
+
+        //When
+        mNameSpace.addVariable(firstVariableName, firstVariableValue);
+        NameSpace clonedNameSpace = mNameSpace.clone();
+        mNameSpace.addVariable(secondVariableName, secondVariableValue);
+
+        //Then
+        assertTrue("Variable " + firstVariableName + " does not exist in the cloned name space",
+            clonedNameSpace.variableExists(firstVariableName));
+        assertFalse("Variable " + secondVariableName + " should not exist in the cloned name space",
+            clonedNameSpace.variableExists(secondVariableName));
     }
 }
