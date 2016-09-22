@@ -9,8 +9,8 @@
 
 <module name="Checker">
     <property name="basedir" value="${basedir}"/>
-    <property name="severity" value="warning"/>
-    
+    <property name="severity" value="error"/>
+
     <!-- Filter out Checkstyle warnings that have been suppressed with the @SuppressWarnings annotation -->
     <module name="SuppressWarningsFilter"/>
 
@@ -25,22 +25,22 @@
        <property name="message" value="Line has trailing spaces."/>
     </module>
 
-    
-    
+
+
     <!-- Checks that a package-info.java file exists for each package.     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
     <module name="JavadocPackage"/>
-    
+
     <!-- Miscellaneous other checks.                   -->
     <!-- See http://checkstyle.sf.net/config_misc.html -->
     <module name="NewlineAtEndOfFile"/>
     <module name="Translation"/>
     <module name="UniqueProperties"/>
-    
+
     <!-- Checks for Size Violations.                    -->
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
     <module name="FileLength"/>
-    
+
     <!-- Checks for whitespace                               -->
     <!-- See http://checkstyle.sf.net/config_whitespace.html -->
     <module name="FileTabCharacter">
@@ -61,7 +61,7 @@
         <module name="PackageAnnotation"/>
         <module name="SuppressWarnings"/>
         <module name="SuppressWarningsHolder"/>
-        
+
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
         <module name="AvoidNestedBlocks"/>
@@ -73,7 +73,7 @@
         <module name="RightCurly">
           <property name="option" value="alone"/>
         </module>
-        
+
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
         <module name="FinalClass"/>
@@ -86,7 +86,7 @@
             <property name="max" value="2"/>
         </module>
         <module name="VisibilityModifier"/>
-        
+
         <!-- Checks for common coding problems               -->
         <!-- See http://checkstyle.sf.net/config_coding.html -->
         <module name="CovariantEquals"/>
@@ -147,10 +147,12 @@
         <module name="VariableDeclarationUsageDistance">
             <property name="ignoreFinal" value="false"/>
         </module>
-        
+
         <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->
-        <module name="AvoidStarImport"/>
+        <module name="AvoidStarImport">
+            <property name="excludes" value="java.io,java.net,java.lang.Math,org.junit.Assert"/>
+        </module>
         <module name="AvoidStaticImport">
             <property name="excludes" value="java.lang.Math.*,org.junit.Assert.*"/>
         </module>
@@ -164,11 +166,12 @@
         </module>
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
-        
+
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="AtclauseOrder"/>
         <module name="JavadocMethod">
+            <property name="excludeScope" value="private"/>
             <property name="allowUndeclaredRTE" value="true"/>
             <property name="allowThrowsTagsForSubclasses" value="true"/>
             <property name="allowMissingPropertyJavadoc" value="true"/>
@@ -188,7 +191,7 @@
         </module>
         <module name="NonEmptyAtclauseDescription"/>
         <module name="SingleLineJavadoc"/>
-        
+
         <!-- Checks for metrics                               -->
         <!-- See http://checkstyle.sf.net/config_metrics.html -->
         <module name="BooleanExpressionComplexity"/>
@@ -206,7 +209,7 @@
         </module>
         <module name="JavaNCSS"/>
         <module name="NPathComplexity"/>
-        
+
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
@@ -332,7 +335,7 @@
             <property name="ignoreOverriddenMethods" value="true"/>
             <property name="tokens" value="METHOD_DEF"/>
         </module>
-        
+
         <!-- Checks for whitespace                               -->
         <!-- See http://checkstyle.sf.net/config_whitespace.html -->
         <module name="EmptyForInitializerPad"/>

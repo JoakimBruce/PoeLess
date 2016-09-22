@@ -8,7 +8,7 @@ import java.util.HashMap;
  * </p>
  * @author      Joakim Bruce
  */
-public class NameSpace implements Cloneable
+public class NameSpace
 {
     private HashMap<String, Object> mVariableRepository;
 
@@ -88,7 +88,7 @@ public class NameSpace implements Cloneable
      */
     public NameSpace copy()
     {
-        NameSpace newNameSpace = new NameSpace();
+        final NameSpace newNameSpace = new NameSpace();
         newNameSpace.mVariableRepository.putAll(mVariableRepository);
         return newNameSpace;
     }

@@ -11,9 +11,6 @@ import se.newmarksaur.poeless.compiler.environment.conditions.QualityCondition;
  */
 public final class QualityConditionReader
 {
-    /**
-     * Unused private constructor.
-     */
     private QualityConditionReader()
     {
         //Not called
@@ -27,9 +24,8 @@ public final class QualityConditionReader
      */
     public static QualityCondition readQualityCondition(final String text)
     {
-        QualityCondition qualityCondition = new QualityCondition();
-        String trimmedText = text.trim();
-        String[] splitString = trimmedText.split(" ");
+        final QualityCondition qualityCondition = new QualityCondition();
+        final String[] splitString = text.trim().split(" ");
         qualityCondition.setOperator(ConditionOperator.fromString(splitString[1]));
         qualityCondition.setQuality(Integer.parseInt(splitString[2]));
         return qualityCondition;

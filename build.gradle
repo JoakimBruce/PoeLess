@@ -4,6 +4,10 @@ apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
 // tag::repositories[]
 repositories { 
     mavenCentral() 

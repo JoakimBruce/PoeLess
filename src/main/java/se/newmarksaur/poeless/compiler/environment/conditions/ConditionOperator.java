@@ -16,16 +16,29 @@ public enum ConditionOperator
 
     private String mOperatorString;
 
+    /**
+     * Private constructor for ConditionOperator.
+     *
+     * @param operatorString The string that the operator represents.
+     */
     ConditionOperator(String operatorString)
     {
         mOperatorString = operatorString;
     }
 
+    @Override
     public String toString()
     {
         return mOperatorString;
     }
 
+    /**
+     * Returns the operator corresponding to the given string.
+     *
+     * @param operatorString A string corresponding to one of the operators.
+     * @return The corresponding operator, or <code>null</code> if the string doesn't match any
+     *     operator.
+     */
     public static ConditionOperator fromString(String operatorString)
     {
         if (operatorString != null)
