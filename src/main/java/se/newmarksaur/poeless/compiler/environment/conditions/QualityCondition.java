@@ -1,22 +1,26 @@
 package se.newmarksaur.poeless.compiler.environment.conditions;
 
-public class QualityCondition
+public final class QualityCondition
 {
     private ConditionOperator mOperator;
     private int mQuality;
+
     public ConditionOperator getOperator()
     {
         return mOperator;
     }
-    public void setOperator(ConditionOperator operator)
+
+    public void setOperator(final ConditionOperator operator)
     {
         mOperator = operator;
     }
+
     public int getQuality()
     {
         return mQuality;
     }
-    public void setQuality(int quality)
+
+    public void setQuality(final int quality)
     {
         mQuality = quality;
     }

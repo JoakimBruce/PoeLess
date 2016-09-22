@@ -10,7 +10,7 @@ public enum ConditionOperator
 
     private String mOperatorString;
 
-    private ConditionOperator(String operatorString)
+    private ConditionOperator(final String operatorString)
     {
         mOperatorString = operatorString;
     }
@@ -20,7 +20,7 @@ public enum ConditionOperator
         return mOperatorString;
     }
 
-    public static ConditionOperator fromString(String operatorString)
+    public static ConditionOperator fromString(final String operatorString)
     {
         if (operatorString != null)
         {

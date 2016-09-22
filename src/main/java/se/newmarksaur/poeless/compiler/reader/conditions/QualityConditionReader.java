@@ -11,7 +11,9 @@ import se.newmarksaur.poeless.compiler.environment.conditions.QualityCondition;
  */
 public final class QualityConditionReader
 {
-    @SuppressWarnings({"JavadocMethod"})
+    /**
+     * Unused private constructor.
+     */
     private QualityConditionReader()
     {
         //Not called
