@@ -84,7 +84,7 @@ public final class NameSpaceTests
         assertNotNull("Variable " + thirdVariableName + " has no value", readThirdValue);
         assertEquals("The retrieved vaule of " + thirdVariableName + ", " + readThirdValue
             + ", does not match the original value, " + thirdVariableValue,
-           readThirdValue, thirdVariableValue);
+            readThirdValue, thirdVariableValue);
     }
 
     /**

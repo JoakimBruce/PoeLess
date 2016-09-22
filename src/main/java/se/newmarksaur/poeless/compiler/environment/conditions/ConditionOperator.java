@@ -1,5 +1,11 @@
 package se.newmarksaur.poeless.compiler.environment.conditions;
 
+/**
+ * <p>
+ * Contains the operators that are relevant for conditions.
+ * </p>
+ * @author      Joakim Bruce
+ */
 public enum ConditionOperator
 {
     GREATER(">"),
@@ -10,7 +16,7 @@ public enum ConditionOperator
 
     private String mOperatorString;
 
-    private ConditionOperator(final String operatorString)
+    ConditionOperator(final String operatorString)
     {
         mOperatorString = operatorString;
     }
