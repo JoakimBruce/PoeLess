@@ -1,6 +1,6 @@
 package se.newmarksaur.poeless.compiler.environment.conditions;
 
-public final class QualityCondition
+public class QualityCondition
 {
     private ConditionOperator mOperator;
     private int mQuality;
@@ -10,7 +10,7 @@ public final class QualityCondition
         return mOperator;
     }
 
-    public void setOperator(final ConditionOperator operator)
+    public void setOperator(ConditionOperator operator)
     {
         mOperator = operator;
     }
@@ -20,7 +20,7 @@ public final class QualityCondition
         return mQuality;
     }
 
-    public void setQuality(final int quality)
+    public void setQuality(int quality)
     {
         mQuality = quality;
     }

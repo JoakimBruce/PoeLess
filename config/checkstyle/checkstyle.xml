@@ -110,7 +110,9 @@
         <module name="IllegalThrows"/>
         <module name="IllegalToken"/>
         <module name="IllegalTokenText"/>
-        <module name="IllegalType"/>
+        <module name="IllegalType">
+            <property name="memberModifiers" value="LITERAL_PUBLIC, LITERAL_PROTECTED, LITERAL_STATIC"/>
+        </module>
         <module name="InnerAssignment"/>
         <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>

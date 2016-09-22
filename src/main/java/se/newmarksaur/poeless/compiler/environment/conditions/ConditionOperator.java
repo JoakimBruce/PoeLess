@@ -16,7 +16,7 @@ public enum ConditionOperator
 
     private String mOperatorString;
 
-    ConditionOperator(final String operatorString)
+    ConditionOperator(String operatorString)
     {
         mOperatorString = operatorString;
     }
@@ -26,7 +26,7 @@ public enum ConditionOperator
         return mOperatorString;
     }
 
-    public static ConditionOperator fromString(final String operatorString)
+    public static ConditionOperator fromString(String operatorString)
     {
         if (operatorString != null)
         {

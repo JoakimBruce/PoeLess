@@ -144,7 +144,7 @@ public final class NameSpaceTests
 
         //When
         mNameSpace.addVariable(firstVariableName, firstVariableValue);
-        NameSpace clonedNameSpace = mNameSpace.clone();
+        NameSpace clonedNameSpace = mNameSpace.copy();
         mNameSpace.addVariable(secondVariableName, secondVariableValue);
 
         //Then

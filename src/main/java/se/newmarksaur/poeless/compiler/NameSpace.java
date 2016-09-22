@@ -1,8 +1,6 @@
 package se.newmarksaur.poeless.compiler;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * <p>
@@ -10,10 +8,8 @@ import java.util.logging.Logger;
  * </p>
  * @author      Joakim Bruce
  */
-public final class NameSpace implements Cloneable
+public class NameSpace implements Cloneable
 {
-    private static final Logger LOGGER = Logger.getLogger(NameSpace.class.getName());
-
     private HashMap<String, Object> mVariableRepository;
 
     /**
@@ -26,10 +22,11 @@ public final class NameSpace implements Cloneable
 
     /**
      * Adds a variable to the name space, overwriting any previous value it may have had.
+     *
      * @param name The variable name.
      * @param value The value of the variable.
      */
-    public void addVariable(final String name, final Object value)
+    public void addVariable(String name, Object value)
     {
         mVariableRepository.put(name, value);
     }
@@ -40,7 +37,7 @@ public final class NameSpace implements Cloneable
      *
      * @param nameSpaceToAdd The name space containing the variables to add to this one.
      */
-    public void addNameSpace(final NameSpace nameSpaceToAdd)
+    public void addNameSpace(NameSpace nameSpaceToAdd)
     {
         if (nameSpaceToAdd != null)
         {
@@ -53,27 +50,30 @@ public final class NameSpace implements Cloneable
 
     /**
      * Checks if the given variable exists in the name space.
+     *
      * @param name The name of the variable.
      * @return <code>true</code> if the variable exists in the name space.
      */
-    public boolean variableExists(final String name)
+    public boolean variableExists(String name)
     {
         return mVariableRepository.containsKey(name);
     }
 
     /**
      * Retrieves the value of a variable in the name space.
+     *
      * @param name The name of the variable.
      * @return The value of the variable, or <code>null</code> if the variable doesn't exist in the
-     * name space.
+     *     name space.
      */
-    public Object getVaraible(final String name)
+    public Object getVaraible(String name)
     {
         return mVariableRepository.get(name);
     }
 
     /**
      * Checks if the name space contains any variables.
+     *
      * @return <code>true</code> if the name space doesn't contain any varaibles.
      */
     public boolean isEmpty()
@@ -81,21 +81,15 @@ public final class NameSpace implements Cloneable
         return mVariableRepository.isEmpty();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public NameSpace clone()
+    /**
+     * Creates a copy of this name space.
+     *
+     * @return A copy of this name space.
+     */
+    public NameSpace copy()
     {
-        NameSpace newNameSpace = null;
-        try
-        {
-            newNameSpace = (NameSpace) super.clone();
-            newNameSpace.mVariableRepository =
-                (HashMap<String, Object>) mVariableRepository.clone();
-        }
-        catch (CloneNotSupportedException e)
-        {
-            LOGGER.log(Level.WARNING, "NameSpace unable to clone itself: " + e.toString());
-        }
+        NameSpace newNameSpace = new NameSpace();
+        newNameSpace.mVariableRepository.putAll(mVariableRepository);
         return newNameSpace;
     }
 }
