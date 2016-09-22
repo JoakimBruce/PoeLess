@@ -4,8 +4,6 @@ apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 
-mainClassName = 'hello.HelloWorld'
-
 // tag::repositories[]
 repositories { 
     mavenCentral() 
@@ -28,6 +26,10 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 // end::dependencies[]
+
+checkstyle {
+    toolVersion = '7.1.1'
+}
 
 // tag::wrapper[]
 // end::wrapper[]
