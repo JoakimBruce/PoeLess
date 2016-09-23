@@ -46,4 +46,31 @@ public class QualityCondition
         }
         return IDENTIFIER_QUALITY + " " + operator + mQuality;
     }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((mOperator == null) ? 0 : mOperator.hashCode());
+        result = prime * result + mQuality;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        QualityCondition other = (QualityCondition) obj;
+        if (mOperator != other.mOperator)
+            return false;
+        if (mQuality != other.mQuality)
+            return false;
+        return true;
+    }
 }
