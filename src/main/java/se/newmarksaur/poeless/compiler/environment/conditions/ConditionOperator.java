@@ -53,4 +53,14 @@ public enum ConditionOperator
         }
         return null;
     }
+
+    /**
+     * Checks if this condition operator if anything else than <code>EQUAL</code>.
+     *
+     * @return <code>false</code> iff this is an <code>EQUAL</code> operator.
+     */
+    public boolean isNotEqualOperator()
+    {
+        return !this.equals(EQUAL);
+    }
 }

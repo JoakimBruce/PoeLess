@@ -8,6 +8,11 @@ package se.newmarksaur.poeless.compiler.environment.conditions;
  */
 public class QualityCondition
 {
+    /**
+     * The token that identifies a condition as a quality condition.
+     */
+    public static final String IDENTIFIER_QUALITY = "Quality";
+
     private ConditionOperator mOperator;
     private int mQuality;
 
@@ -29,5 +34,16 @@ public class QualityCondition
     public void setQuality(int quality)
     {
         mQuality = quality;
+    }
+
+    @Override
+    public String toString()
+    {
+        String operator = "";
+        if (mOperator.isNotEqualOperator())
+        {
+            operator = mOperator + " ";
+        }
+        return IDENTIFIER_QUALITY + " " + operator + mQuality;
     }
 }
