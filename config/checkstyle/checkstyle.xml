@@ -9,7 +9,7 @@
 
 <module name="Checker">
     <property name="basedir" value="${basedir}"/>
-    <property name="severity" value="warning"/>
+    <property name="severity" value="error"/>
 
     <!-- Filter out Checkstyle warnings that have been suppressed with the @SuppressWarnings annotation -->
     <module name="SuppressWarningsFilter"/>
@@ -117,7 +117,9 @@
         <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>
         <module name="ModifiedControlVariable"/>
-        <module name="MultipleStringLiterals"/>
+        <module name="MultipleStringLiterals">
+            <property name="ignoreStringsRegexp" value='^((" "))$'/>
+        </module>
         <module name="MultipleVariableDeclarations"/>
         <module name="NestedForDepth">
             <property name="max" value="2"/>
@@ -137,6 +139,7 @@
             <property name="checkMethods" value="false"/>
         </module>
         <module name="ReturnCount">
+            <property name="max" value="3"/>
             <property name="maxForVoid" value="0"/>
         </module>
         <module name="SimplifyBooleanExpression"/>

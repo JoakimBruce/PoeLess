@@ -1,5 +1,7 @@
 package se.newmarksaur.poeless.compiler.environment.conditions;
 
+import se.newmarksaur.poeless.compiler.exceptions.NoSuchOperatorException;
+
 /**
  * <p>
  * Contains the operators that are relevant for conditions.
@@ -33,25 +35,34 @@ public enum ConditionOperator
     }
 
     /**
-     * Returns the operator corresponding to the given string.
+     * Returns the operator corresponding to the given string. Defaults to <code>EQUAL</code>
+     * if no value is given, e.g. by a <code>null</code> value or an empty string.
      *
-     * @param operatorString A string corresponding to one of the operators.
-     * @return The corresponding operator, or <code>null</code> if the string doesn't match any
-     *     operator.
+     * @param operatorString A string corresponding to one of the operators, or <code>EQUAL</code>
+     *     if the string contains no value.
+     * @return The corresponding operator.
+     * @throws NoSuchOperatorException If the string doesn't correspond to any operator.
      */
     public static ConditionOperator fromString(String operatorString)
+            throws NoSuchOperatorException
     {
-        if (operatorString != null)
+        if (operatorString == null)
+        {
+            return EQUAL;
+        }
+        final String trimmedOperatorString = operatorString.trim();
+        if (!trimmedOperatorString.isEmpty())
         {
             for (ConditionOperator operator: ConditionOperator.values())
             {
-                if (operatorString.equalsIgnoreCase(operator.mOperatorString))
+                if (trimmedOperatorString.equalsIgnoreCase(operator.mOperatorString))
                 {
                     return operator;
                 }
             }
+            throw new NoSuchOperatorException(operatorString);
         }
-        return null;
+        return EQUAL;
     }
 
     /**

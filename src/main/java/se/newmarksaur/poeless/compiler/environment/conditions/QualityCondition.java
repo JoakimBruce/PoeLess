@@ -57,20 +57,32 @@ public class QualityCondition
         return result;
     }
 
+    /**
+     * Compare a QualityCondition with this one to see if they are equal.
+     *
+     * @param qc The QualityCondition to compare this QualityCondition with.
+     * @return <code>true</code> if both QualityConditions have the same operator and quality.
+     */
+    public boolean equals(QualityCondition qc)
+    {
+        if (mOperator == null)
+        {
+            return qc.mOperator == null && mQuality != qc.mQuality;
+        }
+        return mOperator.equals(qc.mOperator) && mQuality == qc.mQuality;
+    }
+
     @Override
     public boolean equals(Object obj)
     {
         if (this == obj)
+        {
             return true;
-        if (obj == null)
+        }
+        if (obj == null || getClass() != obj.getClass())
+        {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-        QualityCondition other = (QualityCondition) obj;
-        if (mOperator != other.mOperator)
-            return false;
-        if (mQuality != other.mQuality)
-            return false;
-        return true;
+        }
+        return equals((QualityCondition) obj);
     }
 }
