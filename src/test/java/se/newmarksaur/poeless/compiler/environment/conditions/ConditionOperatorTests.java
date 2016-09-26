@@ -94,7 +94,7 @@ public class ConditionOperatorTests
         try
         {
             ConditionOperator.fromString(illegalString);
-            fail("\"" + illegalString + "\" is not an operator");
+            fail("\"" + illegalString + "\" is an operator, but is not expected to be one");
         }
         catch (NoSuchOperatorException noSuchOperatorException)
         {
