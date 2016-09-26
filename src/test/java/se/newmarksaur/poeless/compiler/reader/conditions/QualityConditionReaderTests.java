@@ -2,10 +2,13 @@ package se.newmarksaur.poeless.compiler.reader.conditions;
 
 import static org.junit.Assert.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.Test;
 
 import se.newmarksaur.poeless.compiler.environment.conditions.QualityCondition;
-import se.newmarksaur.poeless.compiler.exceptions.NoSuchOperatorException;
+import se.newmarksaur.poeless.compiler.exceptions.MalformedConditionException;
 
 /**
  * <p>
@@ -15,6 +18,9 @@ import se.newmarksaur.poeless.compiler.exceptions.NoSuchOperatorException;
  */
 public class QualityConditionReaderTests
 {
+    private static final Logger LOGGER =
+        Logger.getLogger(QualityConditionReaderTests.class.getName());
+
     /**
      * Tests that the reader is able to read a very basic quality condition.
      */
@@ -34,9 +40,10 @@ public class QualityConditionReaderTests
             assertNotNull(qc);
             assertEquals(simpleQualityCondition, qc.toString());
         }
-        catch (NoSuchOperatorException noSuchOperatorException)
+        catch (MalformedConditionException malformedConditionException)
         {
-            assertTrue(noSuchOperatorException.getMessage(), false);
+            LOGGER.log(Level.SEVERE, "Failed to read condition", malformedConditionException);
+            fail(malformedConditionException.getMessage());
         }
     }
 }

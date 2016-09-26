@@ -2,6 +2,7 @@ package se.newmarksaur.poeless.compiler.reader.conditions;
 
 import se.newmarksaur.poeless.compiler.environment.conditions.ConditionOperator;
 import se.newmarksaur.poeless.compiler.environment.conditions.QualityCondition;
+import se.newmarksaur.poeless.compiler.exceptions.MalformedConditionException;
 import se.newmarksaur.poeless.compiler.exceptions.NoSuchOperatorException;
 
 /**
@@ -22,16 +23,36 @@ public final class QualityConditionReader
      *
      * @param text The text string to analyze, assumed to be a single line.
      * @return A quality condition with operator and value as specified in the input string.
-     * @throws NoSuchOperatorException If the part of the text meant to represent an
-     *     operator doesn't.
+     * @throws MalformedConditionException If the given text fails to parse as a quality condition.
      */
     public static QualityCondition readQualityCondition(final String text)
-            throws NoSuchOperatorException
+            throws MalformedConditionException
     {
         final QualityCondition qualityCondition = new QualityCondition();
         final String[] splitString = text.trim().split(" ");
-        qualityCondition.setOperator(ConditionOperator.fromString(splitString[1]));
-        qualityCondition.setQuality(Integer.parseInt(splitString[2]));
+        if (!QualityCondition.IDENTIFIER_QUALITY.equals(splitString[0]))
+        {
+            throw new MalformedConditionException(QualityCondition.IDENTIFIER_QUALITY, text);
+        }
+
+        try
+        {
+            qualityCondition.setOperator(ConditionOperator.fromString(splitString[1]));
+        }
+        catch (NoSuchOperatorException noSuchOperatorException)
+        {
+            throw new MalformedConditionException(QualityCondition.IDENTIFIER_QUALITY, text,
+                noSuchOperatorException);
+        }
+        try
+        {
+            qualityCondition.setQuality(Integer.parseInt(splitString[2]));
+        }
+        catch (NumberFormatException numberFormatException)
+        {
+            throw new MalformedConditionException(QualityCondition.IDENTIFIER_QUALITY, text,
+                numberFormatException);
+        }
         return qualityCondition;
     }
 }
