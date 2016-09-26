@@ -40,7 +40,65 @@ public class ConditionOperatorTests
         }
         catch (NoSuchOperatorException noSuchOperatorException)
         {
-            assertTrue(noSuchOperatorException.getMessage(), false);
+            fail(noSuchOperatorException.getMessage());
+        }
+    }
+
+    /**
+     * Tests that an empty string defaults to <code>EQUAL</code>.
+     */
+    @Test
+    public void shouldParseEmptyStringsAsEqual()
+    {
+        try
+        {
+            assertTrue(ConditionOperator.EQUAL.equals(ConditionOperator.fromString(null)));
+            assertTrue(ConditionOperator.EQUAL.equals(ConditionOperator.fromString("")));
+            assertTrue(ConditionOperator.EQUAL.equals(ConditionOperator.fromString("  ")));
+        }
+        catch (NoSuchOperatorException noSuchOperatorException)
+        {
+            fail(noSuchOperatorException.getMessage());
+        }
+    }
+
+    /**
+     * Tests that illegal strings yields an error.
+     */
+    @Test
+    public void shouldGetErrorOnIllegalStrings()
+    {
+        testForException("==");
+        testForException("EQUAL");
+        testForException("=>");
+        testForException("=<");
+        testForException("condition");
+    }
+
+    /**
+     * Tests that ConditionOperator correctly identifies when an operator is <code>EQUAL</code> or
+     * not.
+     */
+    @Test
+    public void shouldRecognizeEqualOperator()
+    {
+        assertTrue(ConditionOperator.GREATER.isNotEqualOperator());
+        assertTrue(ConditionOperator.GREATER_OR_EQUAL.isNotEqualOperator());
+        assertTrue(ConditionOperator.LESS.isNotEqualOperator());
+        assertTrue(ConditionOperator.LESS_OR_EQUAL.isNotEqualOperator());
+        assertFalse(ConditionOperator.EQUAL.isNotEqualOperator());
+    }
+
+    private void testForException(String illegalString)
+    {
+        try
+        {
+            ConditionOperator.fromString(illegalString);
+            fail("\"" + illegalString + "\" is not an operator");
+        }
+        catch (NoSuchOperatorException noSuchOperatorException)
+        {
+            assertTrue(noSuchOperatorException.getMessage().contains(illegalString));
         }
     }
 }
