@@ -65,7 +65,11 @@ public class QualityCondition
      */
     public boolean equals(QualityCondition qc)
     {
-        if (mOperator == null)
+        if (qc == null)
+        {
+            return false;
+        }
+        else if (mOperator == null)
         {
             return qc.mOperator == null && mQuality != qc.mQuality;
         }
