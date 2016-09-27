@@ -53,7 +53,7 @@ public class QualityConditionReaderTests
     }
 
     /**
-     * Tests that the reader is able to read a very basic quality condition.
+     * Tests that the reader fails to parse a few representative deviations.
      */
     @Test
     public final void shouldFailToReadInvalidQualityConditions()
