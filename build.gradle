@@ -4,11 +4,13 @@ apply plugin: 'application'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 
-mainClassName = 'hello.HelloWorld'
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
 
 // tag::repositories[]
-repositories { 
-    mavenCentral() 
+repositories {
+    mavenCentral()
 }
 // end::repositories[]
 
@@ -28,6 +30,10 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 // end::dependencies[]
+
+checkstyle {
+    toolVersion = '7.1.1'
+}
 
 // tag::wrapper[]
 // end::wrapper[]

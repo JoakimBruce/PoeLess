@@ -1,13 +1,9 @@
 package se.newmarksaur.poeless.compiler;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * <p>
@@ -17,6 +13,23 @@ import static org.junit.Assert.assertTrue;
  */
 public final class NameSpaceTests
 {
+    private static final String VARIABLE_1_NAME = "foo";
+    private static final String VARIABLE_1_VALUE = "foofoofoo";
+    private static final String VARIABLE_2_NAME = "bar";
+    private static final String VARIABLE_2_VALUE = "barbarbar";
+    private static final String VARIABLE_3_NAME = "chum";
+    private static final String VARIABLE_3_VALUE = "chumchumchum";
+    private static final String VARIABLE_ALTERNATE_VALUE = "vavava";
+
+    private static final String ERROR_VAR_DOESNT_EXIST =
+        "Variable %s does not exist in the name space.";
+    private static final String ERROR_VAR_SHOULDNT_EXIST =
+        "Variable %s should not exist in the name space.";
+    private static final String ERROR_VAR_HAS_NO_VALUE =
+        "Variable %s should have a value.";
+    private static final String ERROR_VAR_HAS_WRONG_VALUE =
+        "Variable %s has value %s, expected %s.";
+
     private NameSpace mNameSpace;
 
     /**
@@ -37,15 +50,11 @@ public final class NameSpaceTests
     public void shouldBeAbleToAddAVariableToTheNameSpace()
     {
         //Given
-        String variableName = "foo";
-        String variableValue = "I am foo";
-
-        //When
-        mNameSpace.addVariable(variableName, variableValue);
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_1_VALUE);
 
         //Then
-        assertTrue("Variable " + variableName + " does not exist in the name space",
-            mNameSpace.variableExists(variableName));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_1_NAME),
+            mNameSpace.variableExists(VARIABLE_1_NAME));
     }
 
     /**
@@ -55,36 +64,35 @@ public final class NameSpaceTests
     public void shouldBeAbleToHoldSeveralVariables()
     {
         //Given
-        String firstVariableName = "foo";
-        String firstVariableValue = "I am foo";
-        String secondVariableName = "bar";
-        String secondVariableValue = "bar I am";
-        String thirdVariableName = "chum";
-        String thirdVariableValue = "chum for I";
-
-        //When
-        mNameSpace.addVariable(firstVariableName, firstVariableValue);
-        mNameSpace.addVariable(secondVariableName, secondVariableValue);
-        mNameSpace.addVariable(thirdVariableName, thirdVariableValue);
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_1_VALUE);
+        mNameSpace.addVariable(VARIABLE_2_NAME, VARIABLE_2_VALUE);
+        mNameSpace.addVariable(VARIABLE_3_NAME, VARIABLE_3_VALUE);
 
         //Then
-        String readSecondValue = (String) mNameSpace.getVaraible(secondVariableName);
-        assertNotNull("Variable " + secondVariableName + " has no value", readSecondValue);
-        assertEquals("The retrieved vaule of " + secondVariableName + ", " + readSecondValue
-            + ", does not match the original value, " + secondVariableValue,
-            readSecondValue, secondVariableValue);
+        //Order should not matter
+        final String readSecondValue = (String) mNameSpace.getVaraible(VARIABLE_2_NAME);
+        assertNotNull(String.format(ERROR_VAR_HAS_NO_VALUE, VARIABLE_2_NAME), readSecondValue);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_2_NAME,
+                readSecondValue,
+                VARIABLE_2_VALUE),
+            VARIABLE_2_VALUE, readSecondValue);
 
-        String readFirstValue = (String) mNameSpace.getVaraible(firstVariableName);
-        assertNotNull("Variable " + firstVariableName + " has no value", readFirstValue);
-        assertEquals("The retrieved vaule of " + firstVariableName + ", " + readFirstValue
-            + ", does not match the original value, " + firstVariableValue,
-            readFirstValue, firstVariableValue);
+        final String readFirstValue = (String) mNameSpace.getVaraible(VARIABLE_1_NAME);
+        assertNotNull(String.format(ERROR_VAR_HAS_NO_VALUE, VARIABLE_1_NAME), readFirstValue);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_1_NAME,
+                readFirstValue,
+                VARIABLE_1_VALUE),
+            VARIABLE_1_VALUE, readFirstValue);
 
-        String readThirdValue = (String) mNameSpace.getVaraible(thirdVariableName);
-        assertNotNull("Variable " + thirdVariableName + " has no value", readThirdValue);
-        assertEquals("The retrieved vaule of " + thirdVariableName + ", " + readThirdValue
-            + ", does not match the original value, " + thirdVariableValue,
-           readThirdValue, thirdVariableValue);
+        final String readThirdValue = (String) mNameSpace.getVaraible(VARIABLE_3_NAME);
+        assertNotNull(String.format(ERROR_VAR_HAS_NO_VALUE, VARIABLE_3_NAME), readThirdValue);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_3_NAME,
+                readThirdValue,
+                VARIABLE_3_VALUE),
+            VARIABLE_3_VALUE, readThirdValue);
     }
 
     /**
@@ -94,16 +102,13 @@ public final class NameSpaceTests
     public void shouldNotReturnAnythingForNonexistantVaraible()
     {
         //Given
-        String presentVariableName = "foo";
-        String presentVariableValue = "I am foo";
-        String absentVariableName = "bar";
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_1_VALUE);
 
         //When
-        mNameSpace.addVariable(presentVariableName, presentVariableValue);
-        String absentVariableValue = (String) mNameSpace.getVaraible(absentVariableName);
+        final String absentVariableValue = (String) mNameSpace.getVaraible(VARIABLE_2_NAME);
 
         //Then
-        assertNull("Unintialized variable " + absentVariableName + " has a non-null value",
+        assertNull("Unintialized variable " + VARIABLE_2_NAME + " has a non-null value",
             absentVariableValue);
     }
 
@@ -113,54 +118,46 @@ public final class NameSpaceTests
     @Test
     public void shouldOverwriteVariableValues()
     {
-        //Given
-        String variableName = "foo";
-        String oldVariableValue = "I am foo";
-        String newVariableValue = "barbarbar";
-
         //When
-        mNameSpace.addVariable(variableName, oldVariableValue);
-        mNameSpace.addVariable(variableName, newVariableValue);
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_1_VALUE);
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_ALTERNATE_VALUE);
 
         //Then
-        String variableValue = (String) mNameSpace.getVaraible(variableName);
-        assertEquals("Variable " + variableName + " is " + variableValue
-            + ", expexted to have been changed to " + newVariableValue,
-            variableValue, newVariableValue);
+        final String variableValue = (String) mNameSpace.getVaraible(VARIABLE_1_NAME);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_1_NAME,
+                variableValue,
+                VARIABLE_ALTERNATE_VALUE),
+            VARIABLE_ALTERNATE_VALUE, variableValue);
     }
 
     /**
-     * Tests that a clone of a name space is properly separated from the original.
+     * Tests that a copy of a name space is properly separated from the original.
      */
     @Test
-    public void shouldCloneToANewNameSpace()
+    public void shouldCopyToANewNameSpace()
     {
         //Given
-        String firstVariableName = "foo";
-        String firstVariableValue = "I am foo";
-        String alternateVariableValue = "Who am i?";
-        String secondVariableName = "bar";
-        String secondVariableValue = "bar I am";
-
-        //When
-        mNameSpace.addVariable(firstVariableName, firstVariableValue);
-        NameSpace clonedNameSpace = mNameSpace.clone();
-        mNameSpace.addVariable(secondVariableName, secondVariableValue);
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_1_VALUE);
+        final NameSpace copiedNameSpace = mNameSpace.copy();
+        mNameSpace.addVariable(VARIABLE_2_NAME, VARIABLE_2_VALUE);
 
         //Then
-        assertTrue("Variable " + firstVariableName + " does not exist in the cloned name space",
-            clonedNameSpace.variableExists(firstVariableName));
-        assertFalse("Variable " + secondVariableName + " should not exist in the cloned name space",
-            clonedNameSpace.variableExists(secondVariableName));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_1_NAME),
+            copiedNameSpace.variableExists(VARIABLE_1_NAME));
+        assertFalse(String.format(ERROR_VAR_SHOULDNT_EXIST, VARIABLE_2_NAME),
+            copiedNameSpace.variableExists(VARIABLE_2_NAME));
 
         //When
-        clonedNameSpace.addVariable(firstVariableName, alternateVariableValue);
+        copiedNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_ALTERNATE_VALUE);
 
         //Then
-        String readFirstValue = (String) mNameSpace.getVaraible(firstVariableName);
-        assertEquals("Variable " + firstVariableName + " is changed to " + readFirstValue
-            + ", expexted to have remained " + firstVariableValue,
-            readFirstValue, firstVariableValue);
+        final String readFirstValue = (String) mNameSpace.getVaraible(VARIABLE_1_NAME);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_1_NAME,
+                readFirstValue,
+                VARIABLE_1_VALUE),
+            VARIABLE_1_VALUE, readFirstValue);
     }
 
     /**
@@ -170,51 +167,54 @@ public final class NameSpaceTests
     public void shouldProperlyAddVariablesWhenAddingNameSpaces()
     {
         //Given
-        String firstVariableName = "foo";
-        String firstVariableValue = "I am foo";
-        String secondVariableName = "bar";
-        String secondVariableValue = "bar I am";
-        String alternateSecondVariableValue = "barbarbar";
-        String thirdVariableName = "chum";
-        String thirdVariableValue = "chum for I";
-
-        NameSpace nameSpaceToAdd = new NameSpace();
+        final NameSpace nameSpaceToAdd = new NameSpace();
 
         //When
-        mNameSpace.addVariable(firstVariableName, firstVariableValue);
-        mNameSpace.addVariable(secondVariableName, secondVariableValue);
+        mNameSpace.addVariable(VARIABLE_1_NAME, VARIABLE_1_VALUE);
+        mNameSpace.addVariable(VARIABLE_2_NAME, VARIABLE_2_VALUE);
 
-        nameSpaceToAdd.addVariable(secondVariableName, alternateSecondVariableValue);
-        nameSpaceToAdd.addVariable(thirdVariableName, thirdVariableValue);
+        nameSpaceToAdd.addVariable(VARIABLE_2_NAME, VARIABLE_ALTERNATE_VALUE);
+        nameSpaceToAdd.addVariable(VARIABLE_3_NAME, VARIABLE_3_VALUE);
 
         mNameSpace.addNameSpace(nameSpaceToAdd);
 
         //Then
-        assertTrue("Variable " + firstVariableName + " should exist in the main name space",
-            mNameSpace.variableExists(firstVariableName));
-        assertTrue("Variable " + secondVariableName + " should exist in the main name space",
-            mNameSpace.variableExists(secondVariableName));
-        assertTrue("Variable " + thirdVariableName + " should exist in the main name space",
-            mNameSpace.variableExists(thirdVariableName));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_1_NAME),
+            mNameSpace.variableExists(VARIABLE_1_NAME));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_2_NAME),
+            mNameSpace.variableExists(VARIABLE_2_NAME));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_3_NAME),
+            mNameSpace.variableExists(VARIABLE_3_NAME));
 
-        String readFirstVariable = (String) mNameSpace.getVaraible(firstVariableName);
-        assertEquals("The retrieved vaule of " + firstVariableName + ", " + readFirstVariable
-            + ", does not match the original value, " + firstVariableValue,
-            readFirstVariable, firstVariableValue);
-        String readSecondVariable = (String) mNameSpace.getVaraible(secondVariableName);
-        assertEquals("The retrieved vaule of " + secondVariableName + ", " + readSecondVariable
-            + ", does not match the changed value, " + alternateSecondVariableValue,
-            readSecondVariable, alternateSecondVariableValue);
-        String readThirdVariable = (String) mNameSpace.getVaraible(thirdVariableName);
-        assertEquals("The retrieved vaule of " + thirdVariableName + ", " + readThirdVariable
-            + ", does not match the added value, " + thirdVariableName,
-            readThirdVariable, thirdVariableValue);
+        final String readFirstValue = (String) mNameSpace.getVaraible(VARIABLE_1_NAME);
+        assertNotNull(String.format(ERROR_VAR_HAS_NO_VALUE, VARIABLE_1_NAME), readFirstValue);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_1_NAME,
+                readFirstValue,
+                VARIABLE_1_VALUE),
+            VARIABLE_1_VALUE, readFirstValue);
 
-        assertFalse("Variable " + firstVariableName + " should not exist in the added name space",
-            nameSpaceToAdd.variableExists(firstVariableName));
-        assertTrue("Variable " + secondVariableName + " should exist in the added name space",
-            nameSpaceToAdd.variableExists(secondVariableName));
-        assertTrue("Variable " + thirdVariableName + " should exist in the added name space",
-            nameSpaceToAdd.variableExists(thirdVariableName));
+        final String readSecondValue = (String) mNameSpace.getVaraible(VARIABLE_2_NAME);
+        assertNotNull(String.format(ERROR_VAR_HAS_NO_VALUE, VARIABLE_2_NAME), readSecondValue);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_2_NAME,
+                readSecondValue,
+                VARIABLE_ALTERNATE_VALUE),
+            VARIABLE_ALTERNATE_VALUE, readSecondValue);
+
+        final String readThirdValue = (String) mNameSpace.getVaraible(VARIABLE_3_NAME);
+        assertNotNull(String.format(ERROR_VAR_HAS_NO_VALUE, VARIABLE_3_NAME), readThirdValue);
+        assertEquals(String.format(ERROR_VAR_HAS_WRONG_VALUE,
+                VARIABLE_3_NAME,
+                readThirdValue,
+                VARIABLE_3_VALUE),
+            VARIABLE_3_VALUE, readThirdValue);
+
+        assertFalse(String.format(ERROR_VAR_SHOULDNT_EXIST, VARIABLE_1_NAME),
+            nameSpaceToAdd.variableExists(VARIABLE_1_NAME));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_2_NAME),
+            nameSpaceToAdd.variableExists(VARIABLE_2_NAME));
+        assertTrue(String.format(ERROR_VAR_DOESNT_EXIST, VARIABLE_3_NAME),
+            nameSpaceToAdd.variableExists(VARIABLE_3_NAME));
     }
 }
